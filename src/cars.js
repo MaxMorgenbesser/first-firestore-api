@@ -18,4 +18,22 @@ export function getAllCars(req,res){
    
 }
 
+export function createCar(req,res){
+    // get a new car from request body
+    const newCar = req.body;
+    // connect to database
+    const db = dbConnect()
+    // add car to cars collection
+    db.collection('cars').add(newCar)
+    .then(doc => {
+        //const id = doc.get().id
+        res.status(201).send({
+            success:true,
+            id: doc.id
+        })
+    })
+    .catch(err => res.status(500).send(err))
+    // send back new doc id
+}
+
  
